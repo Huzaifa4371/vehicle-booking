@@ -9,12 +9,14 @@ app.use(body_parser.json());
 
 let database;
 try {
-  database = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Pass@123",
-    database: "vehiclebooking",
-  }).promise();
+  database = mysql
+    .createConnection({
+      host: "localhost",
+      user: "root",
+      password: "Pass@123",
+      database: "vehiclebooking",
+    })
+    .promise();
 
   console.log("Server Connected");
 } catch (error) {
@@ -30,28 +32,75 @@ app.get("/vehicleinfo/:wheels", async (req, res) => {
       [wheels]
     );
     // console.log(wheels);
-    res.send(rows);  
+    res.send(rows);
   } catch (error) {
-    res.send({"Error" : error});
+    res.send({ Error: error });
+  }
+});
+
+//Api created for Type of vehicle
+app.get("/vehicleinfo/type/:typeid", async (req, res) => {
+  try {
+    const typeid = req.params.typeid;
+    const [rows] = await database.query(
+      "SELECT * FROM vehicleAval where typeid = ? ",
+      [typeid]
+    );
+    //   console.log(typeid);
+    res.send(rows);
+  } catch (error) {
+    res.send({ Error: error });
+  }
+});
+
+//Api for Booking Vehicle
+app.post("/createbooking", async (req, res) => {
+  try {
+    const { first_name, last_name, vehicle_id, start_date, end_date } = req.body;
+    console.log("Incoming booking:", req.body);
+
+    // Check for overlapping bookings
+    const checkQuery = `
+      SELECT * FROM bookingDetail 
+      WHERE vehicleid = ? 
+        AND start_date <= STR_TO_DATE(?, '%Y-%m-%d')
+        AND end_date   >= STR_TO_DATE(?, '%Y-%m-%d')
+    `;
+
+    const [existingBookings] = await database.query(checkQuery, [
+      vehicle_id,
+      end_date,
+      start_date,
+    ]);
+
+    if (existingBookings.length > 0) {
+      return res
+        .status(400)
+        .json({ message: "Vehicle already booked for these dates" });
+    }
+
+    // Insert booking
+    const insertQuery = `
+      INSERT INTO bookingDetail (fname, lname, vehicleid, start_date, end_date) 
+      VALUES (?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'))
+    `;
+
+    await database.query(insertQuery, [
+      first_name,
+      last_name,
+      vehicle_id,
+      start_date,
+      end_date,
+    ]);
+
+    res.json({ message: "Booking successful!" });
+  } catch (error) {
+    console.error("Booking error:", error);
+    res.status(500).json({ message: error.message });
   }
 });
 
 
-//Api created for Type of vehicle
-app.get("/vehicleinfo/type/:typeid", async (req, res) => {
-    try {
-      const typeid = req.params.typeid;
-      const [rows] = await database.query(
-        "SELECT * FROM vehicleAval where typeid = ? ",
-        [typeid]
-      );
-    //   console.log(typeid);
-      res.send(rows);  
-    } catch (error) {
-      res.send({"Error" : error});
-    }
-  });
-
-app.listen(3000, () => {
+app.listen(8080, () => {
   console.log("server active at port 3000");
 });
