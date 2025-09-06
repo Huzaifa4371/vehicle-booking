@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   Radio,
   Input,
-  TextField,
+  TextField,Alert
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -65,16 +65,37 @@ export default function VehicleBooking() {
       first_name: fName,
       last_name: lName,
       vehicle_id: selectedVehicle,
-      start_date: formatDateLocal(startDate),
-      end_date: formatDateLocal(endDate),
+      start_date: formatDateLocal(startDate).toString(),
+      end_date: formatDateLocal(endDate).toString(),
     };
 
-    console.log(booking);
+    // console.log(booking);
+
+    try {
+      const response = await fetch("http://localhost:8080/createbooking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(booking),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        setMessage(result.message);
+        // console.log("message",result)
+      } else {
+        setMessage(result.message);
+        // console.log("message",result)
+      }
+    } catch (error) {
+      console.error(error.message);
+      setMessage("Something went wrong!");
+    }
   };
 
   return (
     <div className="maindiv">
       <h1 className="heading">Vehicle Booking</h1>
+      {message && <Alert severity="info" style={{ marginBottom: 10 }}>{message}</Alert>}
       <div className="box">
         {step === 1 && (
           <>
