@@ -36,6 +36,22 @@ app.get("/vehicleinfo/:wheels", async (req, res) => {
   }
 });
 
+
+//Api created for Type of vehicle
+app.get("/vehicleinfo/type/:typeid", async (req, res) => {
+    try {
+      const typeid = req.params.typeid;
+      const [rows] = await database.query(
+        "SELECT * FROM vehicleAval where typeid = ? ",
+        [typeid]
+      );
+    //   console.log(typeid);
+      res.send(rows);  
+    } catch (error) {
+      res.send({"Error" : error});
+    }
+  });
+
 app.listen(3000, () => {
   console.log("server active at port 3000");
 });
