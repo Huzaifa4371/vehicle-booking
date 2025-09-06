@@ -1,0 +1,46 @@
+.maindiv{
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.box{
+    min-height: 450px;
+    min-width: 400px;
+    border: 2px solid red;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.heading{
+    font-weight: bolder;
+}
+
+.margin-b-10{
+    margin-bottom: 10px;
+}
+
+.margin-T-10{
+    margin-top: 10px;
+}
+
+p{
+    width: 280px;
+    font-weight: bolder;
+    color: red;
+    margin-bottom: 40px;
+}
+
+.blockquote>:last-child {
+    margin-bottom: 20px;
+}
+
+.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root{
+    margin-bottom: 30px;
+}
