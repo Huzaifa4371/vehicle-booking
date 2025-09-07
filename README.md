@@ -1,4 +1,5 @@
-Vehicle Booking System
+Vehicle Booking System:-
+
 A full-stack Vehicle Booking application built with React (frontend), Node.js + Express (backend), and MySQL (database). The app allows users to book vehicles for specific dates with validations and prevents double bookings.
 ________________________________________
 Features / Key Points
