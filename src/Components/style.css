@@ -1,47 +1,123 @@
-.maindiv{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+.maindiv {
     min-width: 100%;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
 }
 
-.box{
+.box {
     min-height: 450px;
     min-width: 400px;
-    border: 2px solid red;
-    border-radius: 10px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.heading{
-    font-weight: bolder;
-    color: red;
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
-.margin-b-10{
+.heading {
+    font-weight: 700;
+    color: #ff3b3b;
+    font-size: 32px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+p {
+    width: 280px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.MuiInputBase-root {
+    border-radius: 8px !important;
+    background: #f8f9fa !important;
+    padding: 10px !important;
+    font-size: 16px !important;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.MuiFormControlLabel-root {
+    margin-bottom: 8px;
+    color: #343a40;
+    font-weight: 500;
+}
+
+.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root {
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.MuiButton-contained {
+    background: #ff3b3b !important;
+    color: #fff !important;
+    font-weight: bold;
+    text-transform: capitalize !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.MuiButton-contained:hover {
+    background: #e03232 !important;
+}
+
+.MuiButton-contained.Mui-disabled {
+    background-color: #ffb3b3 !important;
+    color: #fff !important;
+    opacity: 0.9 !important;
+    cursor: not-allowed !important;
+}
+
+.MuiAlert-root {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    margin-bottom: 15px;
+}
+
+.margin-b-10 {
     margin-bottom: 10px;
 }
 
-.margin-T-10{
+.margin-T-10 {
     margin-top: 10px;
-}
-
-p{
-    width: 280px;
-    font-weight: bolder;
-    color: red;
-    margin-bottom: 40px;
 }
 
 .blockquote>:last-child {
     margin-bottom: 20px;
 }
 
-.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root{
-    margin-bottom: 30px;
+@media (max-width: 500px) {
+    .box {
+        width: 90%;
+        min-width: unset;
+        padding: 20px;
+    }
+    .heading {
+        font-size: 24px;
+    }
 }
