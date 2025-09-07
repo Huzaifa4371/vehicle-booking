@@ -82,6 +82,7 @@ export default function VehicleBooking() {
       if (response.ok) {
         setMessage(result.message);
         // console.log("message",result)
+        
       } else {
         setMessage(result.message);
         // console.log("message",result)
