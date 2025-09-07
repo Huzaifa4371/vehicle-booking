@@ -3,16 +3,16 @@ A full-stack Vehicle Booking application built with React (frontend), Node.js + 
 ________________________________________
 Features / Key Points
 •	Multi-step booking form with frontend validations:
-•	First Name & Last Name must not be empty and contain only alphabets.
-•	Steps 2–4 require radio button selection before proceeding.
-•	Step 5: Start date must be ≤ End date; both dates required.
+1.	First Name & Last Name must not be empty and contain only alphabets.
+2.	Steps 2–4 require radio button selection before proceeding.
+3.	Step 5: Start date must be ≤ End date; both dates required.
 •	Submit button disabled until all validations pass.
 •	Checks for overlapping bookings:
-•	If vehicle already booked → "Vehicle already booked for these dates".
-•	If available → "Booking successful!".
+1.	If vehicle already booked → "Vehicle already booked for these dates".
+2.	If available → "Booking successful!".
 •	Database seeding:
-•	npm run seed checks if MySQL database exists.
-•	Creates database and tables if not present; does nothing if already exists.
+1.	"npm run seed" checks if MySQL database exists.
+2.	Creates database and tables if not present; does nothing if already exists.
 •	Frontend built with React, Material-UI, and Date Pickers.
 •	Backend built with Node.js, Express.js, and MySQL (mysql2).
 ________________________________________
