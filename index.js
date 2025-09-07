@@ -31,14 +31,13 @@ app.get("/vehicleinfo/:wheels", async (req, res) => {
       "SELECT * FROM vehicleType where wheels = ? ",
       [wheels]
     );
-    // console.log(wheels);
     res.send(rows);
   } catch (error) {
-    res.send({ Error: error });
+    res.send({ Error: error.message });
   }
 });
 
-//Api created for Type of vehicle
+// Api created for Type of vehicle
 app.get("/vehicleinfo/type/:typeid", async (req, res) => {
   try {
     const typeid = req.params.typeid;
@@ -46,31 +45,30 @@ app.get("/vehicleinfo/type/:typeid", async (req, res) => {
       "SELECT * FROM vehicleAval where typeid = ? ",
       [typeid]
     );
-    //   console.log(typeid);
     res.send(rows);
   } catch (error) {
-    res.send({ Error: error });
+    res.send({ Error: error.message });
   }
 });
 
-//Api for Booking Vehicle
+// Api for Booking Vehicle
 app.post("/createbooking", async (req, res) => {
   try {
     const { first_name, last_name, vehicle_id, start_date, end_date } = req.body;
     console.log("Incoming booking:", req.body);
-
-    // Check for overlapping bookings
     const checkQuery = `
       SELECT * FROM bookingDetail 
-      WHERE vehicleid = ? 
-        AND start_date <= STR_TO_DATE(?, '%Y-%m-%d')
-        AND end_date   >= STR_TO_DATE(?, '%Y-%m-%d')
+      WHERE vehicleid = ?
+        AND NOT (
+          end_date < STR_TO_DATE(?, '%Y-%m-%d') OR
+          start_date > STR_TO_DATE(?, '%Y-%m-%d')
+        )
     `;
 
     const [existingBookings] = await database.query(checkQuery, [
       vehicle_id,
-      end_date,
       start_date,
+      end_date,
     ]);
 
     if (existingBookings.length > 0) {
@@ -79,7 +77,6 @@ app.post("/createbooking", async (req, res) => {
         .json({ message: "Vehicle already booked for these dates" });
     }
 
-    // Insert booking
     const insertQuery = `
       INSERT INTO bookingDetail (fname, lname, vehicleid, start_date, end_date) 
       VALUES (?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'))
@@ -100,7 +97,6 @@ app.post("/createbooking", async (req, res) => {
   }
 });
 
-
 app.listen(8080, () => {
-  console.log("server active at port 3000");
+  console.log("server active at port 8080");
 });
